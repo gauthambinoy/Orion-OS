@@ -329,7 +329,7 @@ A release **cannot ship** if any of these fail:
 |---|---|---|
 | P#10.1 | `release: cut release/v1.0 branch` | ⬜ |
 | P#10.2 | `docs: complete CHANGELOG.md` | ⬜ |
-| P#10.3 | `web: project website (Astro + Cloudflare Pages)` | ⬜ |
+| P#10.3 | `web: project website (Astro + Cloudflare Pages)` | ✅ [^adr-0001] |
 | P#10.4 | `docs: deploy mkdocs site to Cloudflare Pages` | ⬜ |
 | P#10.5 | `ci: release signing pipeline (cosign + syft SBOM)` | ⬜ |
 | P#10.6 | `release: v1.0.0` | ⬜ |
@@ -337,6 +337,10 @@ A release **cannot ship** if any of these fail:
 | P#10.8 | `ops: enable update channels (unstable/testing/stable)` | ⬜ |
 
 **Tag:** `v1.0.0` 🚀 **SHIP**.
+
+[^adr-0001]: Pulled forward from M10 to M1 per
+    [ADR-0001](docs/adr/0001-pull-p10-3-website-forward.md), so that
+    §8.1 audience-building can start at P#0.1 as the plan requires.
 
 ---
 

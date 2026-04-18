@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('devlog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<BaseLayout
+  title="Devlog — Orion OS"
+  description="Build-in-public devlog for Orion OS."
+>
+  <h1>Devlog</h1>
+  <p>
+    Long-form notes from building Orion OS. Per-commit micro-posts live
+    on Mastodon and Bluesky; this page is the canonical archive.
+  </p>
+  {
+    posts.length === 0 ? (
+      <p>No posts yet — check back soon.</p>
+    ) : (
+      posts.map((post) => (
+        <article>
+          <h2 style="margin-bottom:0.25rem">
+            <a href={`/devlog/${post.slug}`}>{post.data.title}</a>
+          </h2>
+          <p style="margin-top:0">
+            <time datetime={post.data.date.toISOString()}>
+              {post.data.date.toISOString().slice(0, 10)}
+            </time>
+            {post.data.push && <> · {post.data.push}</>}
+          </p>
+          <p>{post.data.summary}</p>
+        </article>
+      ))
+    )
+  }
+</BaseLayout>

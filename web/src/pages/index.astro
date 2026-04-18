@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('devlog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+
+<BaseLayout title="Orion OS — an AI-first Linux desktop">
+  <h1>Orion OS</h1>
+  <p>
+    Orion OS is a Linux desktop where AI is a first-class citizen of the
+    operating system — not a SaaS app you launch, not a cloud you rent,
+    not a tracker you tolerate. It runs on your hardware, on your terms,
+    with <strong>no telemetry, ever</strong>.
+  </p>
+  <p>
+    The whole project is being built in the open, push by push, against a
+    single
+    <a
+      href="https://github.com/gauthambinoy/Orion-OS/blob/main/ORION_DEVELOPMENT_PLAN.md"
+      rel="noopener">master plan</a
+    >. Every commit is one ledger row. Every deviation is an
+    <a
+      href="https://github.com/gauthambinoy/Orion-OS/tree/main/docs/adr"
+      rel="noopener">ADR</a
+    >.
+  </p>
+
+  <h2>Latest from the devlog</h2>
+  {
+    posts.length === 0 ? (
+      <p>
+        No posts yet. <a href="/devlog">See the devlog index</a>.
+      </p>
+    ) : (
+      <ul>
+        {posts.map((post) => (
+          <li>
+            <a href={`/devlog/${post.slug}`}>{post.data.title}</a> —{' '}
+            <time datetime={post.data.date.toISOString()}>
+              {post.data.date.toISOString().slice(0, 10)}
+            </time>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+  <p><a href="/devlog">All devlog posts →</a></p>
+</BaseLayout>
