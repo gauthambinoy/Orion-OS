@@ -42,10 +42,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install shellcheck
+        run: |
+          # Ubuntu runners ship with shellcheck preinstalled, but pin
+          # the call to apt to make the version explicit and avoid the
+          # third-party ludeeus/action-shellcheck download flakiness.
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends shellcheck
+          shellcheck --version
       - name: Run shellcheck on all tracked shell scripts
-        uses: ludeeus/action-shellcheck@2.0.0
         env:
-          SHELLCHECK_OPTS: -S error -x
+          SHELLCHECK_OPTS: "-S error -x"
+        run: |
+          set -euo pipefail
+          mapfile -t files < <(
+            git ls-files '*.sh' '*.bash'
+            git ls-files | xargs -r -I{} \
+              sh -c 'head -c 80 "$1" 2>/dev/null \
+                | grep -lE "^#!.*\b(ba)?sh\b" "$1" 2>/dev/null || true' _ {}
+          )
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "no shell scripts tracked yet — skipping"
+            exit 0
+          fi
+          printf 'Linting:\n'
+          printf '  %s\n' "${files[@]}"
+          # shellcheck disable=SC2086
+          shellcheck $SHELLCHECK_OPTS "${files[@]}"
 
   gitleaks:
     name: gitleaks
