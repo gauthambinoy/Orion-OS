@@ -27,7 +27,10 @@ description: >-
 base-image: ghcr.io/ublue-os/aurora-dx
 # Pin to a concrete Fedora major so builds are reproducible. Bump only
 # in a dedicated PR after testing the new upstream tag end-to-end.
-image-version: "41"
+# 2026-04: bumped 41 -> 43 because ublue-os/aurora-dx:41 was removed
+# from GHCR (Fedora 41 reached EOL upstream); first tag still on the
+# registry is 43. Smoke-tested in CI as part of the M1 build unblock.
+image-version: "43"
 
 # Modules are applied in order. Each step is a focused recipe file under
 # image/recipes/ so we can review and roll back individual concerns.
