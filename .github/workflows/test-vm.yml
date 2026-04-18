@@ -93,10 +93,13 @@ jobs:
           echo "ref=${REF}" >> "$GITHUB_OUTPUT"
           echo "Smoke-testing ${REF}"
 
-      # The Boot VM step runs bootc-image-builder under sudo (rootful
-      # podman), which has its own storage at /var/lib/containers/storage
-      # and will pull the image itself with --pull=newer. No need to
-      # pre-pull into rootless storage on the runner.
+      # Latest bootc-image-builder no longer pulls images itself; the
+      # image must already exist in the rootful container storage that
+      # BIB reads from. Pre-pull with sudo so it lands in the right
+      # place. (We dropped the rootless equivalent in #30 because BIB
+      # never read it.)
+      - name: Pre-pull Orion image into rootful storage
+        run: sudo podman pull "${{ steps.image.outputs.ref }}"
 
       - name: Boot VM and run smoke tests
         env:
