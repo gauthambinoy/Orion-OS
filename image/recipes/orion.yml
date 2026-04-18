@@ -32,12 +32,12 @@ image-version: "41"
 # Modules are applied in order. Each step is a focused recipe file under
 # image/recipes/ so we can review and roll back individual concerns.
 modules:
-  - from-file: recipes/base.yml
-  - from-file: recipes/kde.yml
-  - from-file: recipes/security.yml
+  - from-file: base.yml
+  - from-file: kde.yml
+  - from-file: security.yml
 
 # When a module is added in a later milestone, append it here in the same
 # PR that introduces the recipe file. Order to follow once the modules
 # exist (do not enable until the recipe file is committed):
-#   - from-file: recipes/performance.yml  # P#3.1+
-#   - from-file: recipes/ai.yml           # P#4.7
+#   - from-file: performance.yml  # P#3.1+
+#   - from-file: ai.yml           # P#4.7
