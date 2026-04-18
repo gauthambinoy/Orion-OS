@@ -29,6 +29,11 @@ files:
   - source: ../files/etc/selinux/config
     destination: /etc/selinux/config
 
+  # P#2.3 — kernel hardening sysctls. Numbered 99- so we are last word.
+  # Audited against CIS + kernel.org guidance; relaxing requires an ADR.
+  - source: ../files/etc/sysctl.d/99-orion-hardening.conf
+    destination: /etc/sysctl.d/99-orion-hardening.conf
+
 ---
 # ---- 2. Hardening packages ----
 # Empty for now; later M2 commits (firewalld config, etc.) may add
