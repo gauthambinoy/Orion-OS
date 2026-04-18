@@ -46,6 +46,12 @@ files:
   - source: ../files/etc/systemd/resolved.conf.d/orion-doh.conf
     destination: /etc/systemd/resolved.conf.d/orion-doh.conf
 
+  # P#2.6 — TPM2 enrollment helper invoked by Calamares post-install
+  # and available on the installed system for re-enrollment. Best
+  # effort: never touches the original passphrase slot (plan §7.5).
+  - source: ../files/usr/libexec/orion/tpm-enroll-luks
+    destination: /usr/libexec/orion/tpm-enroll-luks
+
 ---
 # ---- 2. Hardening packages ----
 # Empty for now; later M2 commits (firewalld config, etc.) may add
