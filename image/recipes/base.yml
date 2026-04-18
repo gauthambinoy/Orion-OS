@@ -14,20 +14,13 @@
 # multi-document "---" form for from-file targets).
 
 modules:
-  # ---- 1. Identity files written to the image ----
-  # These overwrite the Aurora-provided files so users see "Orion OS" in
-  # /etc/os-release, /etc/orion-release, and downstream tools that read
-  # os-release metadata (e.g. neofetch, gnome-control-center, KInfoCenter).
-  - type: files
-    files:
-      - source: ../files/etc/os-release
-        destination: /etc/os-release
-      - source: ../files/etc/orion-release
-        destination: /etc/orion-release
-
-  # ---- 2. Base packages ----
+  # ---- 1. Base packages ----
   # Tools we want available on every Orion install regardless of tier or
   # user choices. Anything optional belongs in a later recipe.
+  #
+  # rpm-ostree runs before the identity-file overlay so dnf still sees
+  # the upstream Fedora os-release ($releasever) when fetching repo
+  # metadata. Overlaying first would break $releasever resolution.
   - type: rpm-ostree
     install:
       # System administration essentials kept universal.
@@ -38,6 +31,17 @@ modules:
       - fd-find         # required by semantic search indexer (M7)
       - age             # encrypted vector store + clipboard history (M5/M7)
     remove: []
+
+  # ---- 2. Identity files written to the image ----
+  # These overwrite the Aurora-provided files so users see "Orion OS" in
+  # /etc/os-release, /etc/orion-release, and downstream tools that read
+  # os-release metadata (e.g. neofetch, gnome-control-center, KInfoCenter).
+  - type: files
+    files:
+      - source: ../files/etc/os-release
+        destination: /etc/os-release
+      - source: ../files/etc/orion-release
+        destination: /etc/orion-release
 
   # ---- 3. systemd services we always want enabled ----
   # Empty for now — additions land in their feature recipes (e.g. zram in
