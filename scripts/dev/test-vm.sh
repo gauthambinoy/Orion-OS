@@ -66,7 +66,22 @@ BIB_IMAGE="quay.io/centos-bootc/bootc-image-builder:latest"
 
 if [[ ! -f "${DISK_PATH}" ]] || [[ -n "${ORION_VM_REBUILD:-}" ]]; then
     echo "==> Building qcow2 from ${IMAGE} (this can take a few minutes)"
-    podman run --rm -it \
+
+    # bootc-image-builder needs --privileged and access to the host's
+    # container storage, both of which require root. On a personal Linux
+    # box rootful podman is normal; on GitHub-hosted runners rootless
+    # podman is the default and cannot statfs /var/lib/containers/storage.
+    # Detect the situation and fall back to sudo when available so the
+    # same script works in both environments. Drop -it because CI has no
+    # TTY (podman warns and ignores it, but better to be explicit).
+    SUDO=""
+    if [[ "$(id -u)" -ne 0 ]] && ! [ -r /var/lib/containers/storage ]; then
+        if command -v sudo >/dev/null 2>&1; then
+            SUDO="sudo"
+        fi
+    fi
+
+    ${SUDO} podman run --rm \
         --privileged \
         --pull=newer \
         --security-opt label=type:unconfined_t \
@@ -79,8 +94,13 @@ if [[ ! -f "${DISK_PATH}" ]] || [[ -n "${ORION_VM_REBUILD:-}" ]]; then
 
     # bootc-image-builder writes to qcow2/disk.qcow2 by convention.
     if [[ -f "${WORK_DIR}/qcow2/disk.qcow2" ]]; then
-        mv "${WORK_DIR}/qcow2/disk.qcow2" "${DISK_PATH}"
-        rmdir "${WORK_DIR}/qcow2" 2>/dev/null || true
+        ${SUDO} mv "${WORK_DIR}/qcow2/disk.qcow2" "${DISK_PATH}"
+        ${SUDO} rmdir "${WORK_DIR}/qcow2" 2>/dev/null || true
+        # If sudo wrote the file, hand it back to the invoking user so
+        # later steps (qemu, sha256sum, upload-artifact) can read it.
+        if [[ -n "${SUDO}" ]]; then
+            ${SUDO} chown "$(id -u):$(id -g)" "${DISK_PATH}"
+        fi
     fi
 fi
 
