@@ -111,9 +111,16 @@ jobs:
       - name: Compute ISO checksum
         id: sums
         run: |
-          ISO_PATH="${{ steps.iso.outputs.iso_path }}"
-          if [ -z "${ISO_PATH}" ] || [ ! -f "${ISO_PATH}" ]; then
-            echo "ISO not found at expected path" >&2
+          # The action exposes the ISO location as two outputs: iso_path
+          # is the directory (often ".") and iso_name is the basename.
+          # Compose them and resolve to an absolute path so downstream
+          # steps don't depend on the working directory.
+          ISO_DIR="${{ steps.iso.outputs.iso_path }}"
+          ISO_FILE="${{ steps.iso.outputs.iso_name }}"
+          ISO_PATH="$(realpath -- "${ISO_DIR}/${ISO_FILE}")"
+          if [ ! -f "${ISO_PATH}" ]; then
+            echo "ISO not found at expected path: ${ISO_PATH}" >&2
+            ls -la "${ISO_DIR}" || true
             exit 1
           fi
           sha256sum "${ISO_PATH}" > "${ISO_PATH}.sha256"
