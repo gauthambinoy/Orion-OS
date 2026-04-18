@@ -55,16 +55,14 @@ modules:
     #   skopeo inspect docker://ghcr.io/ublue-os/aurora-dx:43
     remove: []
 
-  # ---- 2. Default Plasma look-and-feel (flatpaks slot) ----
-  # We do NOT switch the global theme here — that belongs to the branding
-  # recipe so theming changes ship with their assets in a single PR. This
-  # module only reserves the slot.
-  - type: default-flatpaks
-    notify: true
-    system:
-      install: []
-      # Per-user flatpaks land in their own recipe (P#4.x) once we have
-      # decided the default app set. Empty on purpose for now.
+  # ---- 2. Default Plasma look-and-feel + flatpaks (slot reserved) ----
+  # Slot for default-flatpaks lives in its own recipe (P#4.x) once we
+  # decide the default app set. We do NOT include the module here with
+  # an empty install list because the BlueBuild default-flatpaks
+  # module errors out on an empty install (CONFIGURATION ERROR), and we
+  # do NOT switch the global theme here either — that belongs to the
+  # branding recipe so theming changes ship with their assets in a
+  # single PR.
 
   # ---- 3. Files / dconf / kwriteconfig hooks ----
   # Reserved for M6 (AI-aware KDE integration). Keeping the section
