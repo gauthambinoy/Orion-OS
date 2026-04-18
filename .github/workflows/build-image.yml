@@ -1,7 +1,7 @@
 ---
 # Orion OS — image build & sign workflow (M1, P#1.4)
 #
-# Builds the Orion OCI image from image/recipe.yml (BlueBuild path) and
+# Builds the Orion OCI image from image/recipes/orion.yml (BlueBuild path) and
 # pushes it to GHCR. On every main-branch build and every tag, the image
 # is also signed with our cosign key and the signature pushed to the
 # registry.
@@ -99,19 +99,28 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # BlueBuild reads image/recipe.yml and produces an OCI image. The
+      # BlueBuild reads image/recipes/orion.yml and produces an OCI image. The
       # action handles the rpm-ostree dance inside a privileged builder
       # container; we only need to point it at the recipe.
       - name: Build image
         id: build
         uses: blue-build/github-action@v1.8
         with:
-          recipe: image/recipe.yml
+          # The action looks for the recipe at <working_directory>/recipes/<recipe>,
+          # so we point working_directory at image/ and pass the recipe
+          # name; modules referenced via from-file are resolved relative
+          # to the recipe file (image/recipes/), so they stay as bare
+          # filenames.
+          working_directory: ./image
+          recipe: orion.yml
+          # cosign_private_key is a required input on this action even
+          # for non-pushing PR builds — it validates signing config up
+          # front and aborts otherwise. Same-repo PRs receive the
+          # secret; forks do not (and could not push or sign anyway).
+          cosign_private_key: ${{ secrets.COSIGN_PRIVATE_KEY }}
           registry_token: ${{ secrets.GITHUB_TOKEN }}
           pr_event_number: ${{ github.event.number }}
           maximize_build_space: true
-          # On PRs the action still builds; we override push afterwards.
-          push: ${{ steps.policy.outputs.push }}
 
       - name: Sign image with trust-root key
         if: steps.policy.outputs.sign == 'true' && steps.build.outputs.image != ''
