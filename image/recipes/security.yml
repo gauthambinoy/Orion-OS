@@ -34,6 +34,12 @@ files:
   - source: ../files/etc/sysctl.d/99-orion-hardening.conf
     destination: /etc/sysctl.d/99-orion-hardening.conf
 
+  # P#2.4 — firewalld "orion" zone: strict default, allows only
+  # DHCPv6, mDNS, SSH; drops inbound echo-request. Foundation for
+  # the Air-Gapped AI mode rule set (plan §5.4).
+  - source: ../files/etc/firewalld/zones/orion.xml
+    destination: /etc/firewalld/zones/orion.xml
+
 ---
 # ---- 2. Hardening packages ----
 # Empty for now; later M2 commits (firewalld config, etc.) may add
