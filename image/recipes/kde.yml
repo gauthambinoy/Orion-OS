@@ -38,7 +38,7 @@ modules:
       - okular                  # PDF / document viewer
       - ark                     # archive manager
       - spectacle               # used by AI screen-context feature in M6
-      - partitionmanager        # required at runtime by Calamares for custom partitioning
+      - kde-partitionmanager    # required at runtime by Calamares for custom partitioning (renamed from partitionmanager in F43)
 
     # Each removal is a deliberate product decision; if you want one
     # back, open a PR with rationale.
