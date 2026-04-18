@@ -59,7 +59,10 @@ mkdir -p "${WORK_DIR}"
 # bootc-image-builder runs as a privileged container that writes the
 # disk image into the work dir. We pin the version so a surprise
 # upstream change cannot break this script.
-BIB_IMAGE="quay.io/centos-bootc/bootc-image-builder:0.1.4"
+# Note: upstream stopped publishing semver tags; only "latest" is kept
+# as a moving tag on quay. Pin by digest in a follow-up once the M1
+# baseline image is locked.
+BIB_IMAGE="quay.io/centos-bootc/bootc-image-builder:latest"
 
 if [[ ! -f "${DISK_PATH}" ]] || [[ -n "${ORION_VM_REBUILD:-}" ]]; then
     echo "==> Building qcow2 from ${IMAGE} (this can take a few minutes)"
