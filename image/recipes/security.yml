@@ -71,9 +71,9 @@ modules:
         - orion-flatpak-setup.service
       disabled: []
 
-  # ---- 3. Hardening packages ----
-  # Empty for now; later M2 commits (firewalld config, etc.) may add
-  # install entries if a tool we depend on is not in the Aurora base.
-  - type: rpm-ostree
-    install: []
-    remove: []
+    # ---- 3. Hardening packages (slot reserved) ----
+    # Empty for now; later M2 commits (firewalld config, etc.) may add
+    # install entries if a tool we depend on is not in the Aurora base.
+    # Module is omitted while empty because rpm-ostree errors out on
+    # an empty install/remove pair; add the module back with the first
+    # actual package entry.

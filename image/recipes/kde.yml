@@ -64,9 +64,9 @@ modules:
   # branding recipe so theming changes ship with their assets in a
   # single PR.
 
-  # ---- 3. Files / dconf / kwriteconfig hooks ----
-  # Reserved for M6 (AI-aware KDE integration). Keeping the section
-  # present-but-empty so the structure is visible in reviews and the diff
-  # in M6 is small and obvious.
-  - type: files
-    files: []
+    # ---- 3. Files / dconf / kwriteconfig hooks (slot reserved) ----
+    # Reserved for M6 (AI-aware KDE integration). Not declared as a
+    # `files` module here because BlueBuild's files module errors out
+    # when the files list is empty ("ERROR: You did not add any file or
+    # folder to the module recipe for copying."). When the first M6 file
+    # entry lands, add the module back here above this comment.

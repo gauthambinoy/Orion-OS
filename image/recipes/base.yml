@@ -43,10 +43,8 @@ modules:
       - source: ../files/etc/orion-release
         destination: /etc/orion-release
 
-  # ---- 3. systemd services we always want enabled ----
-  # Empty for now — additions land in their feature recipes (e.g. zram in
-  # P#3.2). Listed explicitly so the structure is visible in reviews.
-  - type: systemd
-    system:
-      enabled: []
-      disabled: []
+    # ---- 3. systemd services we always want enabled ----
+    # Reserved slot — additions land in their feature recipes (e.g. zram
+    # in P#3.2). Not declared as an empty `systemd` module here because
+    # the module errors out with empty enabled/disabled lists; the
+    # module is added back when the first service entry lands.

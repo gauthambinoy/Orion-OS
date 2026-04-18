@@ -15,6 +15,7 @@ rules:
   comments:
     min-spaces-from-content: 1
   document-start: disable
+  comments-indentation: disable
   indentation:
     spaces: 2
     indent-sequences: consistent
