@@ -33,3 +33,10 @@ MD032: false
 # bare backticks for raw command-line trailer snippets where syntax
 # highlighting would be misleading.
 MD040: false
+
+# MD060 — table column style: off
+# Introduced in markdownlint v0.40 (markdownlint-cli2-action v23). The
+# master plan's tightly-packed tables intentionally omit padding spaces
+# around pipes and (per ORION_DEVELOPMENT_PLAN.md §7.6) cannot be
+# reformatted by an agent, so we relax this rule project-wide.
+MD060: false
