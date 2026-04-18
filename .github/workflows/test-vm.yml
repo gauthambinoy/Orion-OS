@@ -93,8 +93,10 @@ jobs:
           echo "ref=${REF}" >> "$GITHUB_OUTPUT"
           echo "Smoke-testing ${REF}"
 
-      - name: Pull image
-        run: podman pull "${{ steps.image.outputs.ref }}"
+      # The Boot VM step runs bootc-image-builder under sudo (rootful
+      # podman), which has its own storage at /var/lib/containers/storage
+      # and will pull the image itself with --pull=newer. No need to
+      # pre-pull into rootless storage on the runner.
 
       - name: Boot VM and run smoke tests
         env:
