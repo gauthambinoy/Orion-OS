@@ -52,10 +52,24 @@ files:
   - source: ../files/usr/libexec/orion/tpm-enroll-luks
     destination: /usr/libexec/orion/tpm-enroll-luks
 
+  # P#2.7 — Flatpak restrictive defaults: revoke broad host
+  # filesystem/device/socket grants for every Flatpak. Per-app
+  # consent flow via `flatpak override` is preserved (plan §7.5).
+  - source: ../files/etc/flatpak/overrides/global
+    destination: /etc/flatpak/overrides/global
+  - source: ../files/etc/flatpak/remotes.d/flathub-verified.filter
+    destination: /etc/flatpak/remotes.d/flathub-verified.filter
+  - source: ../files/usr/libexec/orion/flatpak-setup
+    destination: /usr/libexec/orion/flatpak-setup
+  - source: ../files/etc/systemd/system/orion-flatpak-setup.service
+    destination: /etc/systemd/system/orion-flatpak-setup.service
+
 ---
 # ---- 2. Hardening packages ----
 # Empty for now; later M2 commits (firewalld config, etc.) may add
 # install entries if a tool we depend on is not in the Aurora base.
-type: rpm-ostree
-install: []
-remove: []
+type: systemd
+system:
+  enabled:
+    - orion-flatpak-setup.service
+  disabled: []
