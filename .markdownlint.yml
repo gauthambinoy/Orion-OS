@@ -1,0 +1,22 @@
+# Orion OS — markdownlint configuration
+# We disable line-length rules because the plan and most docs use long
+# prose lines that are easier to read and review in their natural form.
+
+default: true
+
+# MD013 — line length: off (prose is long-line)
+MD013: false
+
+# MD024 — duplicate headings: allow when nested under different parents
+MD024:
+  siblings_only: true
+
+# MD033 — inline HTML: allow (we use <details>, <summary>, badges, etc.)
+MD033: false
+
+# MD041 — first line in file must be a top-level heading: off
+# (some files start with admonitions or front-matter)
+MD041: false
+
+# MD034 — bare URLs: allow (we sometimes intentionally show full URLs)
+MD034: false
