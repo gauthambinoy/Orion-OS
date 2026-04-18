@@ -42,14 +42,18 @@ modules:
 
     # Each removal is a deliberate product decision; if you want one
     # back, open a PR with rationale.
-    remove:
-      - kmail              # we ship a different default mail story in M8
-      - akregator          # superseded by AI feed reader (M9)
-      - korganizer         # superseded by AI calendar agent (M6)
-      - kontact            # umbrella for the above three
-      - kmahjongg          # default-game removals: keep the desktop focused
-      - kpat
-      - kmines
+    #
+    # NOTE: aurora-dx:43 ships a much trimmer KDE base than F41 and does
+    # not pre-install kmail/akregator/korganizer/kontact or the legacy
+    # KDE games. rpm-ostree errors out on `remove` of any package that
+    # is not present, so the explicit remove list was emptied when the
+    # base bumped F41 -> F43. The PRD intent (no PIM-suite, no toy
+    # games, no demos in the default Orion image) is preserved by the
+    # base image itself; future M2/M8 work that actually needs to drop
+    # an installed package can re-introduce specific entries here after
+    # confirming the package is in aurora-dx via:
+    #   skopeo inspect docker://ghcr.io/ublue-os/aurora-dx:43
+    remove: []
 
   # ---- 2. Default Plasma look-and-feel (flatpaks slot) ----
   # We do NOT switch the global theme here — that belongs to the branding
