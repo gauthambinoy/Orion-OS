@@ -1,0 +1,38 @@
+---
+# Orion OS — security recipe (M2)
+#
+# Hardening configs that ship as files copied into /etc, plus the
+# baseline security packages every Orion install needs. Lands in M2
+# (commits P#2.2 through P#2.7).
+#
+# Why a single recipe rather than one per commit:
+#   - BlueBuild applies modules in the order recipe.yml lists them.
+#     Threading one new file-copy module per commit through recipe.yml
+#     produces a noisy diff and makes it easy to forget the wiring step.
+#   - This recipe is the canonical home for hardening file overlays.
+#     New hardening files added in later M2 commits just append entries
+#     here; the wiring is already done.
+#
+# Plan refs:
+#   - §5.1: SELinux enforcing, firewalld strict, DoH, signed boot
+#   - §7.5: non-negotiable security baseline
+#   - §5.5: Lynis hardening score >= 90 is a release blocker
+
+# ---- 1. Hardening file overlays ----
+# Each entry below is owned by the M2 commit named in the comment.
+# Do not remove an entry without an ADR — these are non-negotiable per
+# plan §7.5.
+type: files
+files:
+  # P#2.2 — SELinux enforcing+targeted, owned by us so regressions show
+  # up in code review and Lynis has a stable file to verify.
+  - source: ../files/etc/selinux/config
+    destination: /etc/selinux/config
+
+---
+# ---- 2. Hardening packages ----
+# Empty for now; later M2 commits (firewalld config, etc.) may add
+# install entries if a tool we depend on is not in the Aurora base.
+type: rpm-ostree
+install: []
+remove: []
