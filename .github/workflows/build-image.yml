@@ -104,7 +104,7 @@ jobs:
       # container; we only need to point it at the recipe.
       - name: Build image
         id: build
-        uses: blue-build/github-action@v1.8
+        uses: blue-build/github-action@v1.11
         with:
           # The action looks for the recipe at <working_directory>/recipes/<recipe>,
           # so we point working_directory at image/ and pass the recipe
