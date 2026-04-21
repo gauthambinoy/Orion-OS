@@ -2,7 +2,7 @@
 
 > **Status:** Living document. Single source of truth.
 > **Owner:** @gauthambinoy
-> **Last revised:** 2026-04-18
+> **Last revised:** 2026-04-21
 > **Audience:** Human maintainers AND AI coding agents (Copilot CLI, Claude Code, Cursor, Codex, Aider, Devin, etc.)
 
 ---
@@ -151,10 +151,10 @@ A release **cannot ship** if any of these fail:
 
 | Milestone | Pushes | Tag | Status |
 |---|---|---|---|
-| M0 — Repo bootstrap | 8 | v0.0.1 | 🟡 in progress |
-| M1 — First bootable image | 10 | v0.1.0-alpha | ⬜ pending |
-| M2 — Security baseline | 9 | v0.2.0-alpha | ⬜ pending |
-| M3 — Performance & tier | 7 | v0.3.0-alpha | ⬜ pending |
+| M0 — Repo bootstrap | 8 | v0.0.1 | ✅ done |
+| M1 — First bootable image | 10 | v0.1.0-alpha | ✅ done |
+| M2 — Security baseline | 9 | v0.2.0-alpha | ✅ done |
+| M3 — Performance & tier | 7 | v0.3.0-alpha | 🟡 next up |
 | M4 — AI runtime core | 10 | v0.4.0-beta | ⬜ pending |
 | M5 — Hero features 1/4 | 9 | v0.5.0-beta | ⬜ pending |
 | M6 — Hero features 2/4 | 8 | v0.6.0-beta | ⬜ pending |
@@ -173,14 +173,14 @@ A release **cannot ship** if any of these fail:
 
 | # | Commit subject | Files | Status |
 |---|---|---|---|
-| P#0.1 | `chore: initial commit` | `LICENSE` (GPL-3.0-or-later), `README.md` | ⬜ |
-| P#0.2 | `docs: add CONTRIBUTING and CODE_OF_CONDUCT` | `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md` | ⬜ |
-| P#0.3 | `docs: add SECURITY policy` | `SECURITY.md` | ⬜ |
-| P#0.4 | `chore: add gitignore, gitattributes, editorconfig` | `.gitignore`, `.gitattributes`, `.editorconfig` | ⬜ |
-| P#0.5 | `ci: add lint workflow (yamllint, shellcheck, gitleaks, commitlint)` | `.github/workflows/lint.yml` | ⬜ |
-| P#0.6 | `chore: add issue and PR templates` | `.github/ISSUE_TEMPLATE/*`, `PULL_REQUEST_TEMPLATE.md` | ⬜ |
-| P#0.7 | `chore: add CODEOWNERS and dependabot` | `.github/CODEOWNERS`, `.github/dependabot.yml` | ⬜ |
-| P#0.8 | `chore: add cosign public key` | `cosign.pub` | ⬜ |
+| P#0.1 | `chore: initial commit` | `LICENSE` (GPL-3.0-or-later), `README.md` | ✅ |
+| P#0.2 | `docs: add CONTRIBUTING and CODE_OF_CONDUCT` | `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md` | ✅ |
+| P#0.3 | `docs: add SECURITY policy` | `SECURITY.md` | ✅ |
+| P#0.4 | `chore: add gitignore, gitattributes, editorconfig` | `.gitignore`, `.gitattributes`, `.editorconfig` | ✅ |
+| P#0.5 | `ci: add lint workflow (yamllint, shellcheck, gitleaks, commitlint)` | `.github/workflows/lint.yml` | ✅ |
+| P#0.6 | `chore: add issue and PR templates` | `.github/ISSUE_TEMPLATE/*`, `PULL_REQUEST_TEMPLATE.md` | ✅ |
+| P#0.7 | `chore: add CODEOWNERS and dependabot` | `.github/CODEOWNERS`, `.github/dependabot.yml` | ✅ |
+| P#0.8 | `chore: add cosign public key` | `cosign.pub` | ✅ |
 
 **After M0:** tag `v0.0.1`, enable branch protection, all future work via PR.
 
@@ -188,16 +188,16 @@ A release **cannot ship** if any of these fail:
 
 | # | Commit | Files | Status |
 |---|---|---|---|
-| P#1.1 | `build: add BlueBuild recipe skeleton` | `image/recipe.yml`, `image/recipes/base.yml` | ⬜ |
-| P#1.2 | `build: add KDE Plasma module` | `image/recipes/kde.yml` | ⬜ |
-| P#1.3 | `build: add Containerfile` | `Containerfile` | ⬜ |
-| P#1.4 | `ci: add image build workflow` | `.github/workflows/build-image.yml` | ⬜ |
-| P#1.5 | `ci: add ISO build workflow` | `.github/workflows/build-iso.yml`, `iso/isogenerator.yml` | ⬜ |
-| P#1.6 | `chore: add justfile with dev tasks` | `justfile` | ⬜ |
-| P#1.7 | `scripts: local QEMU test runner` | `scripts/dev/test-vm.sh` | ⬜ |
-| P#1.8 | `branding: placeholder logo and wallpaper` | `branding/logo/`, `branding/wallpapers/` | ⬜ |
-| P#1.9 | `docs: developer setup guide` | `docs/dev-guide/setup.md` | ⬜ |
-| P#1.10 | `ci: add VM smoke test` | `.github/workflows/test-vm.yml`, `tests/smoke/01-boots.sh` | ⬜ |
+| P#1.1 | `build: add BlueBuild recipe skeleton` | `image/recipe.yml`, `image/recipes/base.yml` | ✅ (#4) |
+| P#1.2 | `build: add KDE Plasma module` | `image/recipes/kde.yml` | ✅ (#6) |
+| P#1.3 | `build: add Containerfile` | `Containerfile` | ✅ (#7) |
+| P#1.4 | `ci: add image build workflow` | `.github/workflows/build-image.yml` | ✅ (#8) |
+| P#1.5 | `ci: add ISO build workflow` | `.github/workflows/build-iso.yml`, `iso/isogenerator.yml` | ✅ (#10) |
+| P#1.6 | `chore: add justfile with dev tasks` | `justfile` | ✅ (#11) |
+| P#1.7 | `scripts: local QEMU test runner` | `scripts/dev/test-vm.sh` | ✅ (#12) |
+| P#1.8 | `branding: placeholder logo and wallpaper` | `branding/logo/`, `branding/wallpapers/` | ✅ (#14) |
+| P#1.9 | `docs: developer setup guide` | `docs/dev-guide/setup.md` | ✅ (#15) |
+| P#1.10 | `ci: add VM smoke test` | `.github/workflows/test-vm.yml`, `tests/smoke/01-boots.sh` | ✅ (#16, hardened by #28/#29/#30) |
 
 **Tag:** `v0.1.0-alpha`. Verify: ISO boots in QEMU, KDE login works.
 
@@ -205,15 +205,15 @@ A release **cannot ship** if any of these fail:
 
 | # | Commit | Files | Status |
 |---|---|---|---|
-| P#2.1 | `security: enable cosign image signing in CI` | `.github/workflows/sign-release.yml` | ⬜ |
-| P#2.2 | `security: SELinux enforcing config` | `image/files/etc/selinux/config` | ⬜ |
-| P#2.3 | `security: hardened sysctls` | `image/files/etc/sysctl.d/99-orion-hardening.conf` | ⬜ |
-| P#2.4 | `security: firewalld strict default` | `image/files/etc/firewalld/zones/orion.xml` | ⬜ |
-| P#2.5 | `security: DNS-over-HTTPS via systemd-resolved` | `image/files/etc/systemd/resolved.conf.d/orion-doh.conf` | ⬜ |
-| P#2.6 | `installer: LUKS2 + TPM2 default in Calamares (passphrase fallback mandatory)` | `iso/calamares/` | ⬜ |
-| P#2.7 | `security: Flatpak restrictive defaults` | `image/files/etc/flatpak/`, override script | ⬜ |
-| P#2.8 | `ci: add security scan workflow (Trivy + Lynis)` | `.github/workflows/security-scan.yml` | ⬜ |
-| P#2.9 | `docs: security model and threat model` | `docs/security-model.md`, `docs/threat-model.md` | ⬜ |
+| P#2.1 | `security: enable cosign image signing in CI` | `.github/workflows/sign-release.yml` | ✅ (#17, key wiring fix in #25) |
+| P#2.2 | `security: SELinux enforcing config` | `image/files/etc/selinux/config` | ✅ (#18) |
+| P#2.3 | `security: hardened sysctls` | `image/files/etc/sysctl.d/99-orion-hardening.conf` | ✅ (#19) |
+| P#2.4 | `security: firewalld strict default` | `image/files/etc/firewalld/zones/orion.xml` | ✅ (#20) |
+| P#2.5 | `security: DNS-over-HTTPS via systemd-resolved` | `image/files/etc/systemd/resolved.conf.d/orion-doh.conf` | ✅ (#21) |
+| P#2.6 | `installer: LUKS2 + TPM2 default in Calamares (passphrase fallback mandatory)` | `iso/calamares/` | ✅ (#23) |
+| P#2.7 | `security: Flatpak restrictive defaults` | `image/files/etc/flatpak/`, override script | ✅ (#24) |
+| P#2.8 | `ci: add security scan workflow (Trivy + Lynis)` | `.github/workflows/security-scan.yml` | ✅ (#26) |
+| P#2.9 | `docs: security model and threat model` | `docs/security-model.md`, `docs/threat-model.md` | ✅ (#27) |
 
 **Tag:** `v0.2.0-alpha`.
 

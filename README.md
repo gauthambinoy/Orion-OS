@@ -4,7 +4,7 @@
 > of the box than Windows or macOS, without selling a single byte of user data.
 
 [![License: GPL-3.0-or-later](https://img.shields.io/badge/License-GPL_3.0--or--later-blue.svg)](LICENSE)
-[![Status: pre-alpha (M0)](https://img.shields.io/badge/status-pre--alpha%20%28M0%29-orange.svg)](ORION_DEVELOPMENT_PLAN.md#62-milestone-status)
+[![Status: pre-alpha (M2 complete, M3 next)](https://img.shields.io/badge/status-pre--alpha%20%28M2%20%E2%9C%93%2C%20M3%20next%29-yellow.svg)](ORION_DEVELOPMENT_PLAN.md#62-milestone-status)
 
 Orion OS is a [Universal Blue](https://universal-blue.org/)-based atomic Linux
 desktop built around **KDE Plasma 6** with a local-first AI runtime baked into
@@ -29,15 +29,24 @@ Translate Overlay · Meeting Capture · Smart Focus & Power.
 
 ## Status
 
-Pre-alpha. We are in **milestone M0 — repo bootstrap**. There is no installable
-image yet. Track progress in the
+Pre-alpha. The repo, a signed bootable image, and the security baseline are in
+place. We are now entering **milestone M3 — performance & tier**. There is still
+no end-user-installable release; the first user-installable target is
+`v0.4.0-beta` (M4). Track progress in the
 [Master Development Plan](ORION_DEVELOPMENT_PLAN.md).
 
 | Milestone | Tag | Status |
 |---|---|---|
-| M0 — Repo bootstrap | `v0.0.1` | 🟡 in progress |
-| M1 — First bootable image | `v0.1.0-alpha` | ⬜ pending |
-| … | … | … |
+| M0 — Repo bootstrap | `v0.0.1` | ✅ done |
+| M1 — First bootable image | `v0.1.0-alpha` | ✅ done |
+| M2 — Security baseline | `v0.2.0-alpha` | ✅ done |
+| M3 — Performance & tier | `v0.3.0-alpha` | 🟡 next up |
+| M4 — AI runtime core | `v0.4.0-beta` | ⬜ pending |
+| M5 — Hero features 1/4 | `v0.5.0-beta` | ⬜ pending |
+| M6 — Hero features 2/4 | `v0.6.0-beta` | ⬜ pending |
+| M7 — Hero features 3/4 | `v0.7.0-beta` | ⬜ pending |
+| M8 — Hero features 4/4 | `v0.8.0-rc1` | ⬜ pending |
+| M9 — Onboarding & polish | `v0.9.0-rc2` | ⬜ pending |
 | M10 — Public 1.0 launch | `v1.0.0` | ⬜ pending |
 
 See the [full ledger](ORION_DEVELOPMENT_PLAN.md#62-milestone-status).
